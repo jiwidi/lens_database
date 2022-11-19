@@ -4,27 +4,31 @@
 <template>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
-    <v-table :data="users">
-      <thead slot="head">
-          <th>Name</th>
-          <th>Age</th>
-      </thead>
-      <tbody slot="body" slot-scope="{displayData}">
-          <tr v-for="row in displayData" :key="row.id">
-            <td>{{ row.id }}</td>
-            <td>{{ row.title }}</td>
-          </tr>
-      </tbody>
-    </v-table>
+    <v-table :data="lenses">
+ <template #head>
+   <thead slot="head">
+     <th>Name</th>
+     <th>mount</th>
+   </thead>
+ </template>
+ <template #body="{ rows }">
+   <tbody>
+     <tr v-for="row in rows" :key="row.name">
+       <td>{{ row.name }}</td>
+       <td>{{ row.mount }}</td>
+     </tr>
+   </tbody>
+ </template>
+</v-table>
   </template>
 
 <script>
-import users from './data/karaoke.json'
+import lenses from './data/lenses.json'
 
 export default {
-    name: 'users',
+    name: 'main',
     data: () => ({
-        users
+        lenses
     })
 }
 </script>
