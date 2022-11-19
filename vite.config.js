@@ -17,4 +17,5 @@ export default defineConfig({
                 import.meta.url))
         }
     },
+    base: '/lens_database/'
 })
