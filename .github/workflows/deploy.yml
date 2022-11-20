@@ -16,4 +16,5 @@ jobs:
         with:
           username: jiwidi
           reponame: lens_database
+          cname: lensdatabase.org
           token: ${{ secrets.GHTOKEN }}
