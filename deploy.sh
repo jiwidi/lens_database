@@ -11,7 +11,6 @@ cd dist
 
 echo 'lensdatabase.org' > CNAME
 
-git init
 git add -A
 git commit -m 'deploy'
 

@@ -1,7 +1,7 @@
 <script setup></script>
 <template>
   <div class="left">
-    <h1>Lens Database</h1>
+    <h1>Lens Database header</h1>
   </div>
   <div class="container">
 
