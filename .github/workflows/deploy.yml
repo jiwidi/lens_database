@@ -1,20 +1,23 @@
-name: Build Vue
-
+name: Deploy to Github Pages
 on:
   push:
     branches:
       - master
-
 jobs:
-  build_vue:
+  gh-pages-deploy:
+    name: Deploying to Github Pages
     runs-on: ubuntu-latest
-    name: Build Vue
     steps:
       - uses: actions/checkout@v2
-      - id: Build-Vue
-        uses: xRealNeon/VuePagesAction@1.0.1
+      - uses: actions/setup-node@v2
         with:
-          username: jiwidi
-          reponame: lens_database
-          cname: lensdatabase.org
-          token: ${{ secrets.GHTOKEN }}
+          node-version: "12"
+
+      - name: Install packages
+        run: npm i
+
+      - name: Set Creds
+        run: git config user.name "jiwidi && git config user.email "fhjaime96@gmail.com"
+
+      - name: Deploy
+        run: npm run deploy

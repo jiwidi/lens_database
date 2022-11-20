@@ -1,5 +1,4 @@
 <script setup></script>
-
 <template>
   <div class="left">
     <h1>Lens Database</h1>
