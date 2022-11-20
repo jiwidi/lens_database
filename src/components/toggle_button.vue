@@ -1,11 +1,25 @@
-<script setup></script>
-
 <template>
-    <button class="ui button toggle" @click="() => filters.type.value.push('Zoom')">Filter by Zoom</button>
+    <button :class="{active:isActive}"
+      >
+      <slot />
+    </button>
+  </template>
 
-
-</template>
-
-<script>
-
-</script>
+  <script>
+  export default {
+    name: 'togglebutton',
+    props: {
+      type: {
+        type: String,
+        default: 'save',
+      },
+    },
+    data () {
+      return {
+        active: false,
+      }
+    },
+    methods: {
+  },
+  };
+  </script>

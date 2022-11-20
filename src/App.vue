@@ -6,7 +6,8 @@
     <h1>Lens Database filter sidebar</h1>
     <label>Filter by Name:</label>
     <input class="form-control" v-model="filters.name.value" />
-    <button class="ui button toggle" @click="() => filters.type.value.push('Zoom')">Filter by Zoom</button>
+    <button class="ui button toggle" @click="filters.type.value.push('Zoom')">Filter by Zoom</button>
+    <togglebutton @click="pishita(filters, 'type', 'Zoom', $event.target)" >Hello</togglebutton>
   </div>
   <div class="container">
     <VTable :data="lenses" :filters="filters">
@@ -34,6 +35,7 @@
 
 <script>
 import lenses from "./data/lenses.json";
+import togglebutton from './components/toggle_button.vue';
 
 export default {
   name: "main",
@@ -50,7 +52,15 @@ export default {
     typeFilter (filterValue, row) {
       if (filterValue.length === 0) return true
       else  return filterValue.includes(row.type)
-    }
+    },
+        pishita (filters, field, value, button) {
+            button.isActive = this.isActive ? false : true;
+            console.log(button.isActive)
+            filters[field].value.push(value)
+        }
+  },
+  components: {
+    togglebutton,
   }
 }
 </script>
