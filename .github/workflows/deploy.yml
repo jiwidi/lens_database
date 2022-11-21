@@ -2,8 +2,7 @@ name: Build Vue
 
 on:
   push:
-    branches:
-      - master
+  workflow_dispatch:
 
 jobs:
   build_vue:
