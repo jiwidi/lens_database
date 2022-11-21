@@ -1,0 +1,41 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+}
+
+.app-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.sidebar {
+  position: sticky;
+  height: 100vh;
+  border-right: 1px solid;
+  top: 0;
+  padding: 1rem;
+}
+
+.content {
+  padding: 1rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+tr {
+  border-bottom: 1px solid var(--fg);
+}
+
+td {
+  padding: .5rem 0;
+}
+
+th {
+  text-align: left;
+}

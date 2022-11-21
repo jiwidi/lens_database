@@ -8,6 +8,8 @@
         "deploy": "sh deploy.sh"
     },
     "dependencies": {
+        "sass": "^1.56.1",
+        "sass-loader": "^13.2.0",
         "vue": "^3.2.41",
         "vuejs-smart-table": "^1.0.0-beta.6"
     },

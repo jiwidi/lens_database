@@ -1,0 +1,11 @@
+html {
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --bg_acc: #f6f6ff;
+}
+
+html[data-theme=dark] {
+  --bg: #101b37;
+  --fg: #ffffff;
+  --bg_acc: #f6f6ff;
+}

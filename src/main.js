@@ -5,7 +5,6 @@ import App from './App.vue'
 
 import SmartTable from 'vuejs-smart-table'
 
-import './assets/main.css'
-
+import './scss/styles.scss'
 
 createApp(App).use(SmartTable).mount('#app')
