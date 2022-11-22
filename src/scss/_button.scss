@@ -1,0 +1,20 @@
+button {
+  font-size: .9rem;
+  background: var(--bg);
+  color: var(--fg);
+  border-radius: .25rem;
+  outline: none;
+  border: 1px solid var(--fg);
+  padding: .5rem .75rem;
+}
+
+button.active {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
