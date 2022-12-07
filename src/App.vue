@@ -25,7 +25,6 @@
             <th>Mount</th>
             <th>Type</th>
             <th>Max aperture</th>
-            <th>Ø filter</th>
           </tr>
         </template>
         <template #body="{ rows }">
@@ -33,17 +32,20 @@
             <td>{{ row.name }}</td>
             <td>{{ row.mount }}</td>
             <td>{{ row.type }}</td>
-            <td>{{ row.maxAperture }}</td>
-            <td>{{ row.filterSize }}</td>
+            <td>F/{{ row.max_aperture }}</td>
           </tr>
         </template>
       </VTable>
+      <smart-pagination
+        :currentPage.sync="currentPage"
+        :pageSize="pageSize"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import lenses from './data/lenses.json'
+import lenses from './data/lenses_big.json'
 import FilterButton from './components/FilterButton.vue'
 
 export default {
@@ -51,6 +53,8 @@ export default {
   data() {
     return {
       lenses,
+      currentPage: 1,
+      pageSize: 30,
       apertures: null,
       filters: {
         name: { value: "", keys: ["name"] },
