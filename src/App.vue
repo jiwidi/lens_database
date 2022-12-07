@@ -65,7 +65,7 @@ export default {
   },
 
   mounted () {
-    this.apertures = [...new Set(this.lenses.map(lens => lens.maxAperture))]
+    this.apertures = [...new Set(this.lenses.map(lens => lens.max_aperture))]
   },
 
   methods: {
@@ -76,7 +76,7 @@ export default {
 
     apertureFilter (filterValue, row) {
       if (filterValue.length === 0) return true
-      else return filterValue.includes(row.maxAperture)
+      else return filterValue.includes(row.max_aperture)
     },
 
     pishita (field, value, action) {
