@@ -11,7 +11,8 @@
         "sass": "^1.56.1",
         "sass-loader": "^13.2.0",
         "vue": "^3.2.41",
-        "vuejs-smart-table": "^1.0.0-beta.6"
+        "vuejs-smart-table": "^1.0.0-beta.6",
+        "sql.js-httpvfs": "^0.8.11"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^3.1.2",

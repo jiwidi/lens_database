@@ -5,6 +5,11 @@
   <div class="app-wrapper">
     <div class="sidebar">
       <h1>Lens Database</h1>
+      <button @click="runSql('SELECT * FROM lenses')">
+        SELECT * FROM mytable
+      </button>
+
+       <pre>{{ result }}</pre>
       <h2>Filter by Name:</h2>
       <input class="form-control" v-model="filters.name.value" />
       <h2>Type</h2>
@@ -47,6 +52,18 @@
 <script>
 import lenses from './data/lenses_big.json'
 import FilterButton from './components/FilterButton.vue'
+import { createDbWorker } from "sql.js-httpvfs";
+
+const publicPath =
+  process.env.NODE_ENV === "production" ? "/vue-sql.js-httpvfs/" : "/";
+const workerUrl = new URL(
+  "sql.js-httpvfs/dist/sqlite.worker.js",
+  import.meta.url,
+);
+const wasmUrl = new URL(
+  "sql.js-httpvfs/dist/sql-wasm.wasm",
+  import.meta.url,
+);
 
 export default {
   name: "main",
@@ -64,8 +81,22 @@ export default {
     }
   },
 
-  mounted () {
-    this.apertures = [...new Set(this.lenses.map(lens => lens.max_aperture))]
+  async mounted () {
+    this.apertures = [...new Set(this.lenses.map(lens => lens.max_aperture))];
+    this.worker = await createDbWorker(
+      [
+        {
+          from: "inline",
+          config: {
+            serverMode: "full",
+            url: `${publicPath}db/lenses.db`,
+            requestChunkSize: 4096,
+          },
+        },
+      ],
+      workerUrl.toString(),
+      wasmUrl.toString()
+    );
   },
 
   methods: {
@@ -81,7 +112,12 @@ export default {
 
     pishita (field, value, action) {
       action === 'add' ? this.filters[field].value.push(value) : this.filters[field].value.pop(value)
-    }
+    },
+
+    async runSql(sql) {
+      this.result = await this.worker.db.query(sql);
+      console.log(this.result);
+    },
   },
 
   components: {
