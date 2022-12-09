@@ -54,8 +54,7 @@ import lenses from './data/lenses_big.json'
 import FilterButton from './components/FilterButton.vue'
 import { createDbWorker } from "sql.js-httpvfs";
 
-const publicPath =
-  process.env.NODE_ENV === "production" ? "/vue-sql.js-httpvfs/" : "/";
+const publicPath = "/";
 const workerUrl = new URL(
   "sql.js-httpvfs/dist/sqlite.worker.js",
   import.meta.url,
