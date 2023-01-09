@@ -8,10 +8,8 @@
       <button @click="runSql('SELECT * FROM lenses')">
         SELECT * FROM mytable
       </button>
-
-       <pre>{{ result }}</pre>
       <h2>Filter by Name:</h2>
-      <input class="form-control" v-model="filters.name.value" />
+      <input class="form-control" />
       <h2>Type</h2>
       <div class="button-group">
         <FilterButton @update-filter="(action) => pishita('type', 'Zoom', action)">Zoom</FilterButton>
@@ -23,38 +21,29 @@
       </div>
     </div>
     <div class="content">
-      <VTable :data="lenses" :filters="filters">
-        <template #head>
-          <tr>
-            <th>Name</th>
-            <th>Mount</th>
-            <th>Type</th>
-            <th>Max aperture</th>
-          </tr>
-        </template>
-        <template #body="{ rows }">
-          <tr v-for="row in rows" :key="row.name">
-            <td>{{ row.name }}</td>
-            <td>{{ row.mount }}</td>
-            <td>{{ row.type }}</td>
-            <td>F/{{ row.max_aperture }}</td>
-          </tr>
-        </template>
-      </VTable>
-      <smart-pagination
-        :currentPage.sync="currentPage"
-        :pageSize="pageSize"
-      />
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Mount</th>
+          <th>Type</th>
+          <th>Max aperture</th>
+        </tr>
+        <tr v-for="lens in result" :key="lens.name">
+          <td>{{ lens.name }}</td>
+          <td>{{ lens.mount }}</td>
+          <td>{{ lens.type }}</td>
+          <td>F/{{ lens.max_aperture }}</td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
 
 <script>
-import lenses from './data/lenses_big.json'
 import FilterButton from './components/FilterButton.vue'
-import { createDbWorker } from "sql.js-httpvfs";
+import { createDbWorker } from "sql.js-httpvfs"
 
-const publicPath = "/";
+const publicPath = "/"
 const workerUrl = new URL(
   "sql.js-httpvfs/dist/sqlite.worker.js",
   import.meta.url,
@@ -68,20 +57,12 @@ export default {
   name: "main",
   data() {
     return {
-      lenses,
-      currentPage: 1,
-      pageSize: 30,
+      result: null,
       apertures: null,
-      filters: {
-        name: { value: "", keys: ["name"] },
-        type: { value: [], custom: this.typeFilter },
-        aperture: { value: [], custom: this.apertureFilter }
-      }
     }
   },
 
   async mounted () {
-    this.apertures = [...new Set(this.lenses.map(lens => lens.max_aperture))];
     this.worker = await createDbWorker(
       [
         {
@@ -95,27 +76,23 @@ export default {
       ],
       workerUrl.toString(),
       wasmUrl.toString()
-    );
+    )
+
+    await this.runSql('SELECT * FROM lenses')
+    this.apertures = [...new Set(this.result.map(lens => lens.max_aperture))]
   },
 
   methods: {
-    typeFilter (filterValue, row) {
-      if (filterValue.length === 0) return true
-      else return filterValue.includes(row.type)
-    },
-
-    apertureFilter (filterValue, row) {
-      if (filterValue.length === 0) return true
-      else return filterValue.includes(row.max_aperture)
-    },
-
     pishita (field, value, action) {
-      action === 'add' ? this.filters[field].value.push(value) : this.filters[field].value.pop(value)
+      //runSql() con la query que toque
+      //update result
+      //ahora mismo filterButton solo gestiona si el filtro esta activo o no (action add/remove)
+      //se puede usar eso para hacer pop de la string??
     },
 
     async runSql(sql) {
-      this.result = await this.worker.db.query(sql);
-      console.log(this.result);
+      this.result = await this.worker.db.query(sql)
+      console.log(this.result)
     },
   },
 
